@@ -1,2 +1,6 @@
 resources
+data
+processed
+parsed
+models
 .DS_Store
