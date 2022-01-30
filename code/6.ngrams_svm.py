@@ -14,6 +14,8 @@ import sklearn.metrics as metrics
 from functools import reduce
 from sklearn import svm
 from sklearn.dummy import DummyClassifier
+### e.g. python3 code/6.ngrams_svm.py TOEFL POS no
+
 from sklearn.model_selection import cross_val_score
 from sklearn.model_selection import train_test_split
 
@@ -155,7 +157,24 @@ stratified_clf = DummyClassifier(strategy="stratified", random_state = 8)
 uniform_clf = DummyClassifier(strategy="uniform", random_state = 8)
 
 ### SVM ###
-clf = svm.SVC(C=1, kernel='linear', decision_function_shape='ovr')
+#clf = svm.SVC(C=1, kernel='linear', decision_function_shape='ovr')
+
+### Random Forest; not so good ###
+#from sklearn.ensemble import RandomForestClassifier
+#clf = RandomForestClassifier(max_depth=2, random_state=0) 
+
+### Extra Trees; not AS good ###
+#from sklearn.ensemble import ExtraTreesClassifier
+#clf = ExtraTreesClassifier(n_estimators=100, random_state=0)
+
+### Decision Tress; not so good ###
+#from sklearn.tree import DecisionTreeClassifier
+#clf = DecisionTreeClassifier(random_state=0)
+
+### Ridge classifier; better ###
+
+from sklearn.linear_model import RidgeClassifierCV
+clf = RidgeClassifierCV(alphas=[1e-3, 1e-2, 1e-1, 1])
 
 ### Output file ###
 
@@ -210,8 +229,10 @@ y_pred = clf.predict(X_test)
 
 cnf_matrix = confusion_matrix(y_test, y_pred)
 
+#target_names = list(set(y_test))
 
-print(classification_report(y_test, y_pred, target_names=class_names))
+
+#print(classification_report(y_test, y_pred, target_names=target_names))
 
 
 def plot_confusion_matrix(cm, classes,
@@ -255,7 +276,7 @@ np.set_printoptions(precision=2)
 plt.figure()
 plot_confusion_matrix(cnf_matrix, classes=class_names,
                       title='Confusion Matrix, without reduction')
-                     # title='Confusion matrix, without reduction')
+
 
 # Plot normalized confusion matrix
 # plt.figure()

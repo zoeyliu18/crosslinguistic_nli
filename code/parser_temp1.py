@@ -104,24 +104,31 @@ if __name__ == '__main__':
 
 	if args.lg == 'en':
 		model = Parser.load('models/en_ewt_model')
-		for corpus in ['TOEFL']:
+		for corpus in ['WriCLE_informal', 'PELIC']:
 			print(corpus)
 			for directory in os.listdir(args.input + corpus):
-				if directory in ['Telugu', 'Turkish']:
+				if directory in ['Spanish, Arabic, Thai, Taiwanese, French']:
 					for file in os.listdir(args.input + corpus + '/' + directory):
 						file_name = file.split('.')[0]
 						check = 0
-						with io.open(args.input + corpus + '/' + directory + '/' + file) as f:
+						with io.open(args.input + corpus + '/' + directory + '/' + file_name + '.conllu') as f:
 							for line in f:
 								toks = line.split('\t')
 								if 'None' in toks:
 									check += 1
 									break
-						if check != 0 or file_name + '.conllu' not in os.listdir(args.input + corpus + '/' + directory + '/') or os.stat(args.input + corpus + '/' + directory + '/' + file_name + '.conllu').st_size == 0:	
+						if check != 0:
 							try:
+								print(file)
 								predict(file, args.input + corpus + '/' + directory + '/', model, 'en', directory)
 							except:
 								pass
+					#	if file_name + '.conllu' not in os.listdir(args.input + corpus + '/' + directory + '/') or os.stat(args.input + corpus + '/' + directory + '/' + file_name + '.conllu').st_size == 0:	
+					#		print(file)
+					#		try:
+					#			predict(file, args.input + corpus + '/' + directory + '/', model, 'en', directory)
+					#		except:
+					#			pass
 							
 	if args.lg == 'es':
 		model = Parser.load('models/es_ancora_model')

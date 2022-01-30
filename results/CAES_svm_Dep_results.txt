@@ -14,21 +14,7 @@ Recall: 0.22528782475802345
 F1: 0.22441347546091256
 
 SVM
-Precision: 0.5841117505415228
-Recall: 0.594223127865512
-F1: 0.5494919742433975
+Precision: 0.5687342243248019
+Recall: 0.5952844871502099
+F1: 0.5577143947003497
 
-             precision    recall  f1-score   support
-
-      Arabic       0.58      0.78      0.66       249
-     Chinese       0.70      0.51      0.59        77
-     English       0.61      0.52      0.56       122
-      French       1.00      0.02      0.05        86
-  Portuguese       0.58      0.79      0.67       188
-     Russian       0.00      0.00      0.00        33
-
-    accuracy                           0.59       755
-   macro avg       0.58      0.44      0.42       755
-weighted avg       0.62      0.59      0.54       755
-
-Confusion matrix, without normalization

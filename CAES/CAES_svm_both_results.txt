@@ -1,0 +1,32 @@
+Majority
+Precision: 0.1092345549360525
+Recall: 0.33050608674267046
+F1: 0.1641998236722798
+
+Random
+Precision: 0.20862416943735368
+Recall: 0.15213448802852778
+F1: 0.1626640444707844
+
+Stratified
+Precision: 0.22416842200933448
+Recall: 0.22528782475802345
+F1: 0.22441347546091256
+
+SVM
+Precision: 0.575026213910625
+Recall: 0.6095975547631177
+F1: 0.559795286223495
+
+              precision    recall  f1-score   support
+
+      Arabic       0.59      0.79      0.67       249
+     Chinese       0.66      0.48      0.56        77
+     English       0.64      0.54      0.59       122
+      French       1.00      0.02      0.05        86
+  Portuguese       0.59      0.81      0.69       188
+     Russian       0.00      0.00      0.00        33
+
+    accuracy                           0.60       755
+   macro avg       0.58      0.44      0.42       755
+weighted avg       0.63      0.60      0.55       755

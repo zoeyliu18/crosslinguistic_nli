@@ -62,7 +62,7 @@ if __name__ == '__main__':
 	corpus_list = []
 
 	if args.lg == 'en':
-		corpus_list = ['TOEFL']#, 'WriCLE_formal', 'WriCLE_informal', 'PELIC']
+		corpus_list = ['TOEFL', 'WriCLE_formal', 'WriCLE_informal', 'PELIC']
 	if args.lg == 'es':
 		corpus_list = ['CAES', 'COWS', 'CEDEL']
 
