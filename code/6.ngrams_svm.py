@@ -100,22 +100,27 @@ else:
         common_lang_list = []
         for corpus in corpus_list:
             with open('results/' + corpus + '_syntax.txt') as f:
+                corpus_lang_list = []
                 for line in f:
                     toks = line.strip().split('\t')
-                    temp_lang_list.append(toks[2])
+                    l = toks[2]
+                    if l not in corpus_lang_list:
+                        corpus_lang_list.append(toks[2])
+                temp_lang_list += corpus_lang_list
 
         for l in set(temp_lang_list):
             if temp_lang_list.count(l) > 1:
                 common_lang_list.append(l)
-
+        print(common_lang_list)
+        
         for corpus in corpus_list:
             with open('results/' + corpus + '_syntax.txt') as f:
                 for line in f:
                     toks = line.strip().split('\t')
-                    POS_list.append(toks[0])
-                    deprel_list.append(toks[1])
                     l = toks[2]
                     if l in common_lang_list:
+                        POS_list.append(toks[0])
+                        deprel_list.append(toks[1])
                         lang_list.append(l)
 
 
@@ -285,3 +290,4 @@ plot_confusion_matrix(cnf_matrix, classes=class_names,
 
 #plt.show()
 plt.savefig('results/' + sys.argv[1] + '_svm_confusion_' + sys.argv[2] + '.png')
+
