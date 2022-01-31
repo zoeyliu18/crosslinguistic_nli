@@ -122,7 +122,7 @@ def word_order(verb_index, sent):
 
 	return order
 
-def has_surbodinate(verb_index, sent):
+def has_surbordinate(verb_index, sent):
 
 	subordinate = []
 
