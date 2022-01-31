@@ -1,11 +1,10 @@
 #!/bin/bash
 #SBATCH --partition=full_nodes
-#SBATCH --job-name=‘allb’
+#SBATCH --job-name='tope'
 #SBATCH --ntasks 1 --cpus-per-task 4
 #SBATCH --mem=80gb
 #SBATCH --time=48:00:00
 #SBATCH --mail-type=BEGIN,END,FAIL.
 cd /data/liuaal/crosslinguistic_nli/
 
-python3 code/6.ngrams_svm.py TOEFL_PELIC_WriCLE-formal_WriCLE-informal_CAES_CEDEL_COWS b no
-
+python3 code/6.ngrams_svm.py PELIC Dep no

@@ -1,0 +1,4 @@
+Traceback (most recent call last):
+  File "code/6.ngrams_svm.py", line 81, in <module>
+    with open('results/' + sys.argv[1] + '_syntax.txt') as f:
+FileNotFoundError: [Errno 2] No such file or directory: 'results/POS_syntax.txt'
