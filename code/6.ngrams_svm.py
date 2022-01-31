@@ -112,11 +112,7 @@ else:
             if temp_lang_list.count(l) > 1:
                 common_lang_list.append(l)
         print(common_lang_list)
-<<<<<<< HEAD
 
-=======
-        
->>>>>>> 534833b2aaca77023fd3a1a3c7623db14c35e768
         for corpus in corpus_list:
             with open('results/' + corpus + '_syntax.txt') as f:
                 for line in f:
@@ -189,7 +185,7 @@ clf = RidgeClassifierCV(alphas=[1e-3, 1e-2, 1e-1, 1])
 
 ### Output file ###
 
-out_file = open('results/' + sys.argv[1] + '_svm_' + sys.argv[2] + '_results.txt', 'w')
+#out_file = open('results/' + sys.argv[1] + '_svm_' + sys.argv[2] + '_results.txt', 'w')
 
 
 
@@ -258,7 +254,6 @@ plot_confusion_matrix(cnf_matrix, classes=class_names,
 #plt.show()
 plt.savefig('results/' + sys.argv[1] + '_svm_confusion_' + sys.argv[2] + '.png')
 
-<<<<<<< HEAD
 '''
 most_frequent_precision = cross_val_score(most_frequent_clf, X, y, cv=5, scoring = 'precision_weighted')
 most_frequent_recall = cross_val_score(most_frequent_clf, X, y, cv=5, scoring = 'recall_weighted')
@@ -297,5 +292,3 @@ out_file.write('F1: ' + str(statistics.mean(f1)) + '\n')
 out_file.write('\n')
 
 '''
-=======
->>>>>>> 534833b2aaca77023fd3a1a3c7623db14c35e768
