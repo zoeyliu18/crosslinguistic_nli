@@ -1,7 +1,7 @@
 from __future__ import division, print_function, absolute_import
 
 import numpy as np
-import os, sys, nltk, string, itertools, pickle, datetime, statistics
+import os, sys, string, itertools, pickle, datetime, statistics
 import matplotlib.pyplot as plt
 
 from sklearn.metrics import confusion_matrix
@@ -133,7 +133,7 @@ if sys.argv[2] == 'POS':
     select_data = POS_list
 if sys.argv[2] == 'Dep':
     select_data = deprel_list
-if sys.argv[2] == 'both':
+if sys.argv[2] == 'b':
     select_data = POSDep
 
 vectorizer = TfidfVectorizer(ngram_range=(1, 3), min_df=1) 
