@@ -1,2 +1,0 @@
-free(): invalid pointer
-/cm/local/apps/slurm/var/spool/job257173/slurm_script: line 9: 331455 Aborted                 (core dumped) python3 code/6.ngrams_svm.py TOEFL_PELIC_WriCLE-formal_WriCLE-informal_CAES_CEDEL_COWS b no
