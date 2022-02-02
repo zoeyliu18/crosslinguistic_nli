@@ -188,7 +188,6 @@ clf = RidgeClassifierCV(alphas=[1e-3, 1e-2, 1e-1, 1])
 #out_file = open('results/' + sys.argv[1] + '_svm_' + sys.argv[2] + '_results.txt', 'w')
 
 
-
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.2, random_state = 8)
 
 clf.fit(X_train, y_train)

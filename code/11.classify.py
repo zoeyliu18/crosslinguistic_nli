@@ -88,8 +88,9 @@ print(len(lang_list))
 print(lang_list)
 
 all_data = pd.concat([TOEFL_data, PELIC_data, WriCLE_formal_data, WriCLE_informal_data, CAES_data, CEDEL_data, COWS_data], axis = 0)
-#all_data = all_data.loc[all_data['Lang'].isin(lang_list)]
-all_data = all_data.loc[:, (all_data != 0).any(axis=0)]
+
+all_data = all_data.loc[all_data['Lang'].isin(lang_list)]
+#all_data = all_data.loc[:, (all_data != 0).any(axis=0)]
 all_data = all_data.dropna(axis = 'columns')
 all_features = list(all_data.columns)
 
