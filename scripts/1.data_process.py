@@ -6,25 +6,24 @@ import io, os, argparse
 import pandas as pd
 import stanza
 
-en_nlp = stanza.Pipeline(lang='en', processors='tokenize')
-es_nlp = stanza.Pipeline(lang='es', processors='tokenize')
-hr_nlp = stanza.Pipeline(lang='hr', processors='tokenize')
 
 def sentence_split(list_of_sentences):
 
 	data = []
 
 	for sent in list_of_sentences:
-		for i in range(len(sent)):
-			c = sent[i]
-			if c not in ['¡', '?', '?', '.', '!']:
-				data.append(c)
-			else:
-				data.append(c)
-				data.append('-SENT-')
+		if len(sent) != 0 and sent != '\n':
+			for i in range(len(sent)):
+				c = sent[i]
+				if c not in ['¡', '?', '?', '.', '!']:
+					data.append(c)
+				else:
+					data.append(c)
+					data.append('-SENT-')
 
 	sentences = ''.join(c for c in data)
 	sentences = sentences.split('-SENT-')
+
 	new_sentences = []
 	for sent in sentences:
 		if len(sent) != 0:
@@ -53,17 +52,11 @@ def read_caes(path, output):
 					for line in f:
 						essay.append(line.strip())
 
-				new_essay = []
-				essay_processed = es_nlp(' '.join(s for s in essay))
-				for sent in essay_processed.sentences:
-					sent = sent.text
-					new_essay.append(sent) 
+				new_essay = sentence_split(essay)
 				
 				with io.open(output + 'CAES/' + directory + '/' + file, 'w') as f:
 					for sent in new_essay:
 						f.write(sent + '\n')
-
-	sentence_split(output + 'CAES/')
 
 ### Read COWSL2H ###
 
@@ -98,19 +91,13 @@ def read_cows(path, output):
 			os.system('mkdir ' + output + 'COWS/' + k)
 
 		for essay in v:
-			new_essay = []
-			essay_processed = es_nlp(essay)
-			for sent in essay_processed.sentences:
-				sent = sent.text
-				new_essay.append(sent) ### one tokenized sentence per line; one essay per text file
+			new_essay = sentence_split(essay)
 
 			with io.open(output + 'COWS/' + k + '/' + str(idx) + '.txt', 'w') as f:
 				for sent in new_essay:
 					f.write(sent + '\n')
 
 			idx += 1
-
-	sentence_split(output + 'COWS/')
 
 
 ### Read cedel2_learner.csv ###
@@ -141,11 +128,7 @@ def read_cedel(path, output):
 			os.system('mkdir ' + output + 'CEDEL/' + k)
 
 		for essay in v:
-			new_essay = []
-			essay_processed = es_nlp(essay)
-			for sent in essay_processed.sentences:
-				sent = sent.text
-				new_essay.append(sent) ### one tokenized sentence per line; one essay per text file
+			new_essay = sentence_split(essay)
 
 			with io.open(output + 'CEDEL/' + k + '/' + str(idx) + '.txt', 'w') as f:
 				for sent in new_essay:
@@ -181,11 +164,7 @@ def read_pelic(path, output):
 			os.system('mkdir ' + output + 'PELIC/' + k)
 
 		for essay in v:
-			new_essay = []
-			essay_processed = en_nlp(essay)
-			for sent in essay_processed.sentences:
-				sent = sent.text
-				new_essay.append(sent) ### one tokenized sentence per line; one essay per text file
+			new_essay = sentence_split(essay)
 
 			with io.open(output + 'PELIC/' + k + '/' + str(idx) + '.txt', 'w') as f:
 				for sent in new_essay:
@@ -232,11 +211,7 @@ def read_wricle(path, output):
 					if len(tok) != 0:
 						essay.append(tok)
 
-				new_essay = []
-				essay_processed = en_nlp(' '.join(s for s in essay))
-				for sent in essay_processed.sentences:
-					sent = sent.text
-					new_essay.append(sent) 
+				new_essay = sentence_split(essay)
 
 				with io.open(output + directory + 'Spanish' + '/' + str(idx) + '.txt', 'w') as f:
 					for sent in new_essay:
@@ -260,26 +235,23 @@ def read_toefl(path, output):
 			os.system('mkdir ' + output + 'TOEFL/' + directory)
 
 		for file in os.listdir(path + 'TOEFL/' + directory):
-			essay = []
+			if os.stat(path + 'TOEFL/' + directory + '/' + file).st_size != 0:
+				essay = []
 
-			with io.open(path + 'TOEFL/' + directory + '/' + file) as f:
-				for line in f:
-					essay.append(line.strip())
+				with io.open(path + 'TOEFL/' + directory + '/' + file) as f:
+					for line in f:
+						essay.append(line.strip())
 
-			new_essay = []
-			essay_processed = en_nlp(' '.join(s for s in essay))
-			for sent in essay_processed.sentences:
-				sent = sent.text
-				new_essay.append(sent) 
+				new_essay = sentence_split(essay) 
 				
-			with io.open(output + 'TOEFL/' + directory + '/' + file, 'w') as f:
-				for sent in new_essay:
-					f.write(sent + '\n')
+				with io.open(output + 'TOEFL/' + directory + '/' + file, 'w') as f:
+					for sent in new_essay:
+						f.write(sent + '\n')
 
 
 ### Read EFCAMDAT_data.csv ###
 
-def efcamdat(path, output):
+def read_efcamdat(path, output):
 
 	essays = {}
 
@@ -305,17 +277,13 @@ def efcamdat(path, output):
 			os.system('mkdir ' + output + 'EFCAMDAT/' + k)
 
 		for essay in v:
-			new_essay = []
-			essay_processed = en_nlp(essay)
-			for sent in essay_processed.sentences:
-				sent = sent.text
-				new_essay.append(sent) ### one tokenized sentence per line; one essay per text file
+			new_essay = sentence_split(essay)
 
 			with io.open(output + 'EFCAMDAT/' + k + '/' + str(idx) + '.txt', 'w') as f:
 				for sent in new_essay:
 					f.write(sent + '\n')
 
-			idx = 1
+			idx += 1
 
 
 if __name__ == '__main__':
@@ -323,21 +291,14 @@ if __name__ == '__main__':
 	parser = argparse.ArgumentParser()
 	parser.add_argument('--input', type = str, help = 'path to resources/')
 	parser.add_argument('--output', type = str, help = 'path to data/')
-	parser.add_argument('--corpus', type = str, help = 'pelic, toefl')
+	parser.add_argument('--corpus', type = str, help = 'e.g., pelic, toefl')
 
 	args = parser.parse_args()
 
-	if args.lg == 'en':
-	#	read_pelic(args.input, args.output)
-		read_wricle(args.input, args.output)
-		read_toefl(args.input, args.output)
+	corpus = args.corpus
+	function_maps = {'caes': read_caes, 'cows': read_cows, 'cedel': read_cedel, 'pelic': read_pelic, 'wricle': read_wricle, 'pelic': read_pelic, 'toefl': read_toefl, 'efcamdat': read_efcamdat}
 
-	if args.lg == 'es':
-	#	read_caes(args.input, args.output)
-	#	read_cows(args.input + 'cowsl2h/csv/', args.output)
-		read_cedel(args.input, args.output)
-
-#	if args.lg == 'hr':
+	function_maps[corpus](args.input, args.output)
 
 
 
