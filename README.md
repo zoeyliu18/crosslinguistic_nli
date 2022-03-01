@@ -39,3 +39,4 @@ Corpus index:
   - CEDEL: ```cedel```
   - COWS-L2H: ```cows```
   
+```python3 scripts/1.data_process.py --input resources/ --output data/ --corpus CORPUS_INDEX```
