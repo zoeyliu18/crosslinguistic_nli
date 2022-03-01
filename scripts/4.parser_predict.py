@@ -99,26 +99,28 @@ if __name__ == '__main__':
 	parser = argparse.ArgumentParser()
 	parser.add_argument('--input', type = str, help = 'path to data/')
 	parser.add_argument('--lg', type = str, help = 'en, es, hr')
+	parser.add_argument('--corpus', type = str, help = 'e.g., pelic, toefl')
 
 	args = parser.parse_args()
 
-	corpus_list = ''
+	corpus args.corpus
 	model = ''
 
 	if args.lg == 'en':
 		model = Parser.load('models/en_ewt_model')
-		corpus_list = ['TOEFL', 'PELIC', 'WriCLE_formal', 'WriCLE_informal']
 
 	if args.lg == 'es':
 		model = Parser.load('models/es_ancora_model')
-		corpus_list = ['CAES', 'COWS', 'CEDEL']:
 
-	for corpus in corpus_list:
-		for directory in os.listdir(args.input + corpus):
-			print(directory)
-			for file in os.listdir(args.input + corpus + '/' + directory):
-				file_name = file.split('.')[0]
-				if file_name + '.conllu' not in os.listdir(args.input + corpus + '/' + directory + '/') or os.stat(args.input + corpus + '/' + directory + '/' + file_name + '.conllu').st_size == 0:	
-					print(file)
-					predict(file, args.input + corpus + '/' + directory + '/', model, 'en', directory)
+	if args.lg == 'hr':
+		model = Parser.load('models/hr_set_model')
+
+
+	for directory in os.listdir(args.input + corpus):
+		print(directory)
+		for file in os.listdir(args.input + corpus + '/' + directory):
+			file_name = file.split('.')[0]
+			if file_name + '.conllu' not in os.listdir(args.input + corpus + '/' + directory + '/') or os.stat(args.input + corpus + '/' + directory + '/' + file_name + '.conllu').st_size == 0:	
+				print(file)
+				predict(file, args.input + corpus + '/' + directory + '/', model, 'en', directory)
 

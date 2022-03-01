@@ -35,14 +35,16 @@ def sentence_split(list_of_sentences):
 
 def read_caes(path, output):
 
+	lg_directory = {'Arabe': 'Arabic', 'Chino_mandarin': 'Chinese', 'Frances': 'French', 'Ingles': 'English', 'Portugues': 'Portuguese', 'Ruso': 'Russian'}
+
 	if not os.path.exists(output + 'CAES'):
 		os.system('mkdir ' + output + 'CAES')
 
 	for directory in os.listdir(path + 'CAES/'):
-		lg = directory
+		lg = lg_directory[directory]
 
-		if not os.path.exists(output + 'CAES/' + directory):
-			os.system('mkdir ' + output + 'CAES/' + directory)
+		if not os.path.exists(output + 'CAES/' + lg):
+			os.system('mkdir ' + output + 'CAES/' + lg)
 
 		for file in os.listdir(path + 'CAES/' + directory):
 			if os.stat(path + 'CAES/' + directory + '/' + file).st_size != 0:
@@ -54,7 +56,7 @@ def read_caes(path, output):
 
 				new_essay = sentence_split(essay)
 				
-				with io.open(output + 'CAES/' + directory + '/' + file, 'w') as f:
+				with io.open(output + 'CAES/' + lg + '/' + file, 'w') as f:
 					for sent in new_essay:
 						f.write(sent + '\n')
 
@@ -64,10 +66,9 @@ def read_cows(path, output):
 
 	essays = {}
 
-	for file in os.listdir(path):
-		data = pd.read_csv(path + file, encoding = 'utf-8')
+	for file in os.listdir(path + '/cowsl2h/csv/'):
+		data = pd.read_csv(path + '/cowsl2h/csv/' + file, encoding = 'utf-8')
 		L1 = data['l1 language'].tolist()
-		print(L1)
 		courses = data['course'].tolist()
 		texts = data['essay'].tolist()
 
@@ -160,17 +161,18 @@ def read_pelic(path, output):
 	idx = 1
 
 	for k, v in essays.items():
-		if not os.path.exists(output + 'PELIC/' + k):
+		if not os.path.exists(output + 'PELIC/' + k) and k not in ['English', 'Other']:
 			os.system('mkdir ' + output + 'PELIC/' + k)
 
 		for essay in v:
 			new_essay = sentence_split(essay)
 
-			with io.open(output + 'PELIC/' + k + '/' + str(idx) + '.txt', 'w') as f:
-				for sent in new_essay:
-					f.write(sent + '\n')
+			if k != 'English':
+				with io.open(output + 'PELIC/' + k + '/' + str(idx) + '.txt', 'w') as f:
+					for sent in new_essay:
+						f.write(sent + '\n')
 
-			idx += 1
+				idx += 1
 
 
 ### Read text files from WriCLE_formal and WriCLE_informal ###
