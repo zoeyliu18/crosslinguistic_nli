@@ -1,5 +1,9 @@
 # crosslinguistic_nli: Data-driven Crosslinguistic Morphosyntactic Transfer in Second Language Learning
 
+## Installation
+  - [Stanza](https://stanfordnlp.github.io/stanza/)
+  - [Diaparser](https://github.com/Unipisa/diaparser)
+
 ## Acquire original learner corpora 
 
 ### English learner corpora
