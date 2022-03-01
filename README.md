@@ -27,3 +27,15 @@
   
   - [COWS-L2H](https://github.com/ucdaviscl/cowsl2h)
       - Resulting sub-directory structure: ```resources/cowsl2h```
+
+## Group/Generate text files for each corpus
+
+Corpus index:
+  - TOEFL: ```toefl```
+  - PELIC: ```pelic```
+  - WriCLE: ```wricle```
+  - EFCAMDAT: ```efcamdat```
+  - CAES: ```caes```
+  - CEDEL: ```cedel```
+  - COWS-L2H: ```cows```
+  
