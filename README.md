@@ -3,7 +3,12 @@
 ## Installation
   - [Stanza](https://stanfordnlp.github.io/stanza/)
   - [Diaparser](https://github.com/Unipisa/diaparser)
-    - Within ```crosslinguistic_nli/```, ```git clone``` the git repo for Diaparser
+    - Would be easier to put the ```crosslinguistic_nli``` folder within ```diaparser/``` for running experiments
+
+## Download UD data
+  - [UD_English-EWT](https://github.com/UniversalDependencies/UD_English-EWT)
+  - [UD_Spanish-Ancora](https://github.com/UniversalDependencies/UD_Spanish-AnCora)
+  - [UD_Croatian-SET](https://github.com/UniversalDependencies/UD_Croatian-SET)
 
 ## Acquire original learner corpora 
 
@@ -45,3 +50,13 @@ Corpus index:
   - COWS-L2H: ```cows```
   
 ```python3 scripts/1.data_process.py --input resources/ --output data/ --corpus CORPUS_INDEX```
+
+## Download Stanza models
+
+```python3 2.download_stanza.py```
+
+## Training monolingual parsers
+
+```bash 3.train_parsers.sh```
+
+
