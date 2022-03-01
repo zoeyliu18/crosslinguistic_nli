@@ -3,6 +3,7 @@
 ## Installation
   - [Stanza](https://stanfordnlp.github.io/stanza/)
   - [Diaparser](https://github.com/Unipisa/diaparser)
+    - Within ```crosslinguistic_nli/```, ```git clone``` the git repo for Diaparser
 
 ## Acquire original learner corpora 
 
