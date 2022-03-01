@@ -66,4 +66,4 @@ Language index:
   - Spanish: ```es```
   - Croatian: ```hr```
 
-e.g., ```python3 scripts/4.parser_predict.py --input data/ --lg en --corpus toefl
+e.g., ```python3 scripts/4.parser_predict.py --input data/ --lg en --corpus toefl```
