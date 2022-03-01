@@ -49,7 +49,7 @@ Corpus index:
   - CEDEL: ```cedel```
   - COWS-L2H: ```cows```
   
-```python3 scripts/1.data_process.py --input resources/ --output data/ --corpus CORPUS_INDEX```
+e.g., ```python3 scripts/1.data_process.py --input resources/ --output data/ --corpus toefl```
 
 ## Download Stanza models
 
@@ -59,4 +59,11 @@ Corpus index:
 
 ```bash 3.train_parsers.sh```
 
+## Generate parses for each corpus
 
+Language index:
+  - English: ```en```
+  - Spanish: ```es```
+  - Croatian: ```hr```
+
+e.g., ```python3 scripts/4.parser_predict.py --input data/ --lg en --corpus toefl
