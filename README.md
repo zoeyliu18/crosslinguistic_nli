@@ -17,4 +17,13 @@
       - Run ```scripts/process_EFCAMDAT_xml.R``` to generate ```EFCAMDAT_data.csv```
       - Move ```EFCAMDAT_data.csv``` to ```resources/```
       
+ ### Spanish learner corpora
+ 
+  - [CAES](https://www.cervantes.es/lengua_y_ensenanza/informacion.htm)
+      - Resulting sub-directory structure: in ```resources/CAES/```, text files of data for each L1 are placed in an individual folder (e.g., ```Arabe```)
   
+  - [CEDEL](http://cedel2.learnercorpora.com/search)
+      - Resulting sub-directory structure: ```resources/cedel2_learner.csv```, ```resources/cedel2_native.csv```
+  
+  - [COWS-L2H](https://github.com/ucdaviscl/cowsl2h)
+      - Resulting sub-directory structure: ```resources/cowsl2h```
