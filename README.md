@@ -49,7 +49,9 @@ Corpus index:
   - CEDEL: ```cedel```
   - COWS-L2H: ```cows```
   
-e.g., ```python3 scripts/1.data_process.py --input resources/ --output data/ --corpus toefl```
+e.g., run within ```crosslinguistic_nli/```
+
+```python3 scripts/1.data_process.py --input resources/ --output data/ --corpus toefl```
 
 ## Download Stanza models
 
