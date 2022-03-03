@@ -54,13 +54,15 @@ e.g., run within ```crosslinguistic_nli/```
 
 ## Download Stanza models
 
-```python3 2.download_stanza.py```
+e.g., run within ```crosslinguistic_nli/```
+  - ```python3 2.download_stanza.py```
 
 ## Training monolingual parsers
 
-e.g., ```cp diaparser/crosslinguistic_nli/scripts/3.train_parser.sh diaparser/```
+```cp diaparser/crosslinguistic_nli/scripts/3.train_parser.sh diaparser/```
 
-```bash 3.train_parsers.sh```
+e.g.,  run within ```diaparser/```
+  - ```bash 3.train_parsers.sh```
 
 ## Generate parses for each corpus
 
@@ -69,8 +71,7 @@ Language index:
   - Spanish: ```es```
   - Croatian: ```hr```
 
-e.g., 
-
 ```cp diaparser/crosslinguistic_nli/scripts/4.diaparser_predict.py diaparser/```
 
-```python3 4.diaparser_predict.py --input data/ --lg en --corpus TOEFL```
+e.g.,  run within ```diaparser/```
+  - ```python3 4.diaparser_predict.py --input data/ --lg en --corpus TOEFL```
