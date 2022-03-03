@@ -57,7 +57,7 @@ e.g., ```python3 scripts/1.data_process.py --input resources/ --output data/ --c
 
 ## Training monolingual parsers
 
-```cp diaparser/crosslinguistic_nli/scripts/3.train_parser.sh diaparser/```
+e.g., ```cp diaparser/crosslinguistic_nli/scripts/3.train_parser.sh diaparser/```
 
 ```bash 3.train_parsers.sh```
 
@@ -68,6 +68,8 @@ Language index:
   - Spanish: ```es```
   - Croatian: ```hr```
 
+e.g., 
+
 ```cp diaparser/crosslinguistic_nli/scripts/4.diaparser_predict.py diaparser/```
 
-e.g., ```python3 4.diaparser_predict.py --input data/ --lg en --corpus toefl```
+```python3 4.diaparser_predict.py --input data/ --lg en --corpus TOEFL```
