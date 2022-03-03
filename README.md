@@ -50,8 +50,7 @@ Corpus index:
   - COWS-L2H: ```cows```
   
 e.g., run within ```crosslinguistic_nli/```
-
-```python3 scripts/1.data_process.py --input resources/ --output data/ --corpus toefl```
+  - ```python3 scripts/1.data_process.py --input resources/ --output data/ --corpus toefl```
 
 ## Download Stanza models
 
