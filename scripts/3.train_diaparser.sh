@@ -1,0 +1,9 @@
+cd diaparser/
+
+python -m diaparser.cmds.biaffine_dependency train --train ../UD_data/UD_English-EWT/en_ewt-ud-train.conllu --dev ../UD_data/UD_English-EWT/en_ewt-ud-dev.conllu --test ../UD_data/UD_English-EWT/en_ewt-ud-test.conllu  -b -d 0 -p ../models/en_ewt_model  -f bert  --batch-size 5000  --bert bert-base-multilingual-cased  -s 1
+python -m diaparser.cmds.biaffine_dependency train --train ../UD_data/UD_Croatian-SET/hr_set-ud-train.conllu --dev ../UD_data/UD_Croatian-SET/hr_set-ud-dev.conllu --test ../UD_data/UD_Croatian-SET/hr_set-ud-test.conllu  -b -d 0 -p ../models/hr_set_model  -f bert  --batch-size 5000  --bert bert-base-multilingual-cased  -s 1
+python -m diaparser.cmds.biaffine_dependency train --train ../UD_data/UD_Spanish-AnCora/es_ancora-ud-train.conllu --dev ../UD_data/UD_Spanish-AnCora/es_ancora-ud-dev.conllu --test ../UD_data/UD_Spanish-AnCora/es_ancora-ud-test.conllu  -b -d 0 -p ../models/es_ancora_model  -f bert  --batch-size 5000  --bert bert-base-multilingual-cased  -s 1
+python -m diaparser.cmds.biaffine_dependency train --train ../UD_data/UD_Portuguese-GSD/pt_gsd-ud-train.conllu --dev ../UD_data/UD_Portuguese-GSD/pt_gsd-ud-dev.conllu --test ../UD_data/UD_Portuguese-GSD/pt_gsd-ud-test.conllu  -b -d 0 -p ../models/pt_gsd_model  -f bert  --batch-size 5000  --bert bert-base-cased  -s 1
+python -m diaparser.cmds.biaffine_dependency train --train ../UD_data/UD_Czech-PDT/cs_pdt-ud-train.conllu --dev ../UD_data/UD_Czech-PDT/cs_pdt-ud-dev.conllu --test ../UD_data/UD_Czech-PDT/cs_pdt-ud-test.conllu  -b -d 0 -p ../models/cs_pdt_model  -f bert  --batch-size 5000  --bert bert-base-cased  -s 1
+
+cd ..

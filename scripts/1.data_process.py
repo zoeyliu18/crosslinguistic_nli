@@ -255,9 +255,12 @@ def read_toefl(path, output):
 
 def read_efcamdat(path, output):
 
+	lg_directory = {"cn": 'Chinese', "tr": 'Turkish', "mx": 'Spanish', "fr": 'French', "de": 'German', "br": 'Portuguese', "ru": 'Russian', "sa": 'Arabic', "it": 'Italian', "tw": 'Taiwanese', "jp": 'Japanese'}
+
 	essays = {}
 
 	data = pd.read_csv(path + 'EFCAMDAT_data.csv', encoding = 'utf-8')
+	print('Read data')
 	L1 = data['nationality'].tolist()
 	texts = data['text'].tolist()
 	
@@ -275,18 +278,191 @@ def read_efcamdat(path, output):
 	idx = 1
 
 	for k, v in essays.items():
-		if not os.path.exists(output + 'EFCAMDAT/' + k):
-			os.system('mkdir ' + output + 'EFCAMDAT/' + k)
+		if not os.path.exists(output + 'EFCAMDAT/' + lg_directory[k]):
+			os.system('mkdir ' + output + 'EFCAMDAT/' + lg_directory[k])
+			print(output + 'EFCAMDAT/' + lg_directory[k])
 
 		for essay in v:
 			new_essay = sentence_split(essay)
 
-			with io.open(output + 'EFCAMDAT/' + k + '/' + str(idx) + '.txt', 'w') as f:
+			with io.open(output + 'EFCAMDAT/' + lg_directory[k] + '/' + str(idx) + '.txt', 'w') as f:
 				for sent in new_essay:
 					f.write(sent + '\n')
 
 			idx += 1
 
+
+### Read CroLTeC
+
+def read_croltec(path, output):
+
+	lg_directory = {'ara': 'Arabic', 'zh0': 'Chinese', 'zsm': 'Malay', 'nld': 'Dutch', 'zho': 'Chinese', 'afr': 'Afrikaans', 'ltz': 'Luxembourgish', 'ind': 'Indonesian', 'tha': 'Thai', 'som': 'Somali', 'tuk': 'Turkmen', 'ita': 'Italian', 'hun': 'Hungarian', 'vie': 'Vietnamese', 'pol': 'Polish', 'bos': 'Bosnian', 'sqi': 'Albanian', 'bul': 'Bulgarian', 'tur': 'Turkish', 'lug': 'Luganda', 'rus': 'Russian', 'fas': 'Persian', 'isl': 'Icelandic', 'nor': 'Norwegian', 'arc': 'Aramaic', 'fin': 'Finnish', 'ukr': 'Ukrainian', 'mkd': 'Macedonian', 'lrl': 'Lari', 'deu': 'German', 'swe': 'Swedish', 'dan': 'Danish', 'eng': 'English', 'ces': 'Czech', 'est': 'Estonian', 'amh': 'Amharic', 'por': 'Portuguese', 'hin': 'Hindi', 'ron': 'Romainian', 'cat': 'Catalan', 'spa': 'Spanish', 'kor': 'Korean', 'fra': 'French', 'heb': 'Hebrew', 'jpn': 'Japanese', 'mnk': 'Mandinka', 'slv': 'Slovenian', 'slk': 'Slovak'}
+
+	if not os.path.exists(output + 'CroLTeC/'):
+		os.system('mkdir ' + output + 'CroLTeC/')
+
+	for lg_code, lg in lg_directory.items():
+		if not os.path.exists(output + 'CroLTeC/' + lg):
+			os.system('mkdir ' + output + 'CroLTeC/' + lg)
+
+	for xml_file in os.listdir(path + 'CroLTeC/'):
+		if xml_file.endswith('.xml'):
+			lg_code = xml_file.split('2F')[1][ : 3]
+			lg = lg_directory[lg_code]
+
+			file_name = xml_file.split('2F')[1].split('.')[0] + '.txt'
+
+			data = []
+			with open(path + 'CroLTeC/' + xml_file) as f:
+				for line in f:
+					tok = line.strip()
+					if '<tok id' in tok:
+						data.append(tok)
+
+			new_data = []
+			for tok in data:
+				tok = tok.split('</tok>')
+				if len(tok) > 0:
+					for word_info in tok:
+						if '<tok id' in word_info:
+							word = word_info.split('lemma')
+							if len(word) > 1:
+								word = word[1].split('>')
+								if len(word) > 1:
+									word = word[1]
+									if '\ufeff' in word:
+										word = word.split('\ufeff')[1]
+										if word != '':
+											new_data.append(word)
+									else:
+										new_data.append(word)
+		
+			if len(new_data) != 0:
+				with io.open(output + 'CroLTeC/' + lg + '/' + file_name, 'w') as f:
+					essay = [' '.join(w for w in new_data)]
+					new_essay = sentence_split(essay)
+					for sent in new_essay:
+						f.write(sent + '\n')
+
+
+### Read Cople ###
+
+def read_cople(path, output):
+
+	lg_directory = {'ar': 'Arabic', 'de': 'German', 'en': 'English', 'es': 'Spanish', 'fr': 'French', 'it': 'Italian', 'ja': 'Japanese', 'ko': 'Korean', 'nl': 'Dutch', 'pl': 'Polish', 'ro': 'Romanian', 'ru': 'Russian', 'sv': 'Swedish', 'te': 'Tetum', 'zh': 'Chinese'}
+
+	if not os.path.exists(output + 'Cople'):
+		os.system('mkdir ' + output + 'Cople')
+
+	for file in os.listdir(path + 'NLI_PT_v2.0/cople/clean/'):
+		lg_code = file[ : 2]
+		lg = lg_directory[lg_code]
+
+		if not os.path.exists(output + 'Cople/' + lg):
+			os.system('mkdir ' + output + 'Cople/' + lg)
+
+		if os.stat(path + 'NLI_PT_v2.0/cople/clean/' + file).st_size != 0:
+			essay = []
+
+			with io.open(path + 'NLI_PT_v2.0/cople/clean/' + file) as f:
+				for line in f:
+					essay.append(line.strip())
+
+			new_essay = sentence_split(essay)
+				
+			with io.open(output + 'Cople/' + lg + '/' + file, 'w') as f:
+				for sent in new_essay:
+					f.write(sent + '\n')
+
+
+### Read Leiria ###
+
+def read_leiria(path, output):
+
+	lg_directory = {'eng': 'English', 'french': 'French', 'german': 'German', 'ita': 'Italian', 'kore': 'Korean', 'polish': 'Polish', 'roman': 'Romanian', 'russ': 'Russian', 'span': 'Spanish', 'swed': 'Swedish'}
+
+	if not os.path.exists(output + 'Leiria'):
+		os.system('mkdir ' + output + 'Leiria')
+
+	for file in os.listdir(path + 'NLI_PT_v2.0/Leiria/clean/'):
+		lg_code = file.split('_')[0]
+		lg = lg_directory[lg_code]
+
+		if not os.path.exists(output + 'Leiria/' + lg):
+			os.system('mkdir ' + output + 'Leiria/' + lg)
+
+		if os.stat(path + 'NLI_PT_v2.0/Leiria/clean/' + file).st_size != 0:
+			essay = []
+
+			with io.open(path + 'NLI_PT_v2.0/Leiria/clean/' + file) as f:
+				for line in f:
+					essay.append(line.strip())
+
+			new_essay = sentence_split(essay)
+				
+			with io.open(output + 'Leiria/' + lg + '/' + file, 'w') as f:
+				for sent in new_essay:
+					f.write(sent + '\n')
+
+
+### Read PEAPLE ###
+
+def read_peaple(path, output):
+
+	lg_directory = {'ALEM': 'German', 'ARABE': 'Arabic', 'CHIN': 'Chinese', 'COREANO': 'Korean', 'ESPANHOL': 'Spanish', 'FRANC': 'French', 'INGL': 'English', 'ITALIANO': 'Italian', 'JAPON': 'Japanese', 'NEERLAND': 'Dutch', 'POLACO': 'Polish', 'ROMENO': 'Romanian', 'RUSSO': 'Russian', 'Tetum': 'Tetum', 'SUECO': 'Swedish'}
+	if not os.path.exists(output + 'PEAPLE'):
+		os.system('mkdir ' + output + 'PEAPLE')
+
+	for file in os.listdir(path + 'NLI_PT_v2.0/PEAPLE2/clean/'):
+		lg_code = ''
+		if file.startswith('ALEM'):
+			lg_code = 'ALEM'		
+		if file.startswith('ARABE'):
+			lg_code = 'ARABE'
+		if file.startswith('CHIN'):
+			lg_code = 'CHIN'
+		if file.startswith('COREANO'):
+			lg_code = 'COREANO'
+		if file.startswith('ESPANHOL'):
+			lg_code = 'ESPANHOL'
+		if file.startswith('FRANC'):
+			lg_code = 'FRANC'
+		if file.startswith('INGL'):
+			lg_code = 'INGL'
+		if file.startswith('ITALIANO'):
+			lg_code = 'ITALIANO'
+		if file.startswith('JAPON'):
+			lg_code = 'JAPON'
+		if file.startswith('NEERLAND'):
+			lg_code = 'NEERLAND' 
+		if file.startswith('POLACO'):
+			lg_code = 'POLACO' 
+		if file.startswith('ROMENO'):
+			lg_code = 'ROMENO' 
+		if file.startswith('RUSSO'):
+			lg_code = 'RUSSO' 
+		if file.startswith('SUECO'):
+			lg_code = 'SUECO' 
+		if 'TUM' in file: 
+			lg_code = 'Tetum'
+
+		lg = lg_directory[lg_code]
+
+		if not os.path.exists(output + 'PEAPLE/' + lg):
+			os.system('mkdir ' + output + 'PEAPLE/' + lg)
+
+		if os.stat(path + 'NLI_PT_v2.0/PEAPLE2/clean/' + file).st_size != 0:
+			essay = []
+
+			with io.open(path + 'NLI_PT_v2.0/PEAPLE2/clean/' + file) as f:
+				for line in f:
+					essay.append(line.strip())
+
+			new_essay = sentence_split(essay)
+				
+			with io.open(output + 'PEAPLE/' + lg + '/' + file, 'w') as f:
+				for sent in new_essay:
+					f.write(sent + '\n')
 
 if __name__ == '__main__':
 
@@ -298,7 +474,7 @@ if __name__ == '__main__':
 	args = parser.parse_args()
 
 	corpus = args.corpus
-	function_maps = {'caes': read_caes, 'cows': read_cows, 'cedel': read_cedel, 'pelic': read_pelic, 'wricle': read_wricle, 'pelic': read_pelic, 'toefl': read_toefl, 'efcamdat': read_efcamdat}
+	function_maps = {'caes': read_caes, 'cows': read_cows, 'cedel': read_cedel, 'pelic': read_pelic, 'wricle': read_wricle, 'pelic': read_pelic, 'toefl': read_toefl, 'efcamdat': read_efcamdat, 'croltec': read_croltec, 'cople': read_cople, 'leiria': read_leiria, 'peaple': read_peaple}
 
 	function_maps[corpus](args.input, args.output)
 

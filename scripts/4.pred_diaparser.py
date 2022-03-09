@@ -5,9 +5,6 @@ from diaparser.parsers import Parser
 import pandas as pd
 import stanza
 
-en_nlp = stanza.Pipeline(lang='en', processors='tokenize,mwt,pos,lemma,depparse')
-es_nlp = stanza.Pipeline(lang='es', processors='tokenize,mwt,pos,lemma,depparse')
-hr_nlp = stanza.Pipeline(lang='hr', processors='tokenize,pos,lemma,depparse')
 
 ### Read each essay in individual *.txt format ###
 
@@ -18,7 +15,8 @@ def read_essay(file, path):
 	with io.open(path + file, encoding = 'utf-8') as f:
 		for line in f:
 			toks = line.strip().split()
-			essay.append(toks)
+			if toks != []:
+				essay.append(toks)
 
 	return essay
 
@@ -35,11 +33,20 @@ def get_features(sentence, lg, l1):
 
 	parse_info = ''
 	if lg == 'en':
+		en_nlp = stanza.Pipeline(lang='en', processors='tokenize,mwt,pos,lemma,depparse')
 		parse_info = en_nlp(utterance)
 	if lg == 'es':
+		es_nlp = stanza.Pipeline(lang='es', processors='tokenize,mwt,pos,lemma,depparse')
 		parse_info = es_nlp(utterance)
 	if lg == 'hr':
+		hr_nlp = stanza.Pipeline(lang='hr', processors='tokenize,pos,lemma,depparse')
 		parse_info = hr_nlp(utterance)
+	if lg == 'pt':
+		pt_nlp = stanza.Pipeline(lang='pt', processors='tokenize,pos,lemma,depparse')
+		parse_info = pt_nlp(utterance)
+	if lg == 'cs':
+		cs_nlp = stanza.Pipeline(lang='cs', processors='tokenize,pos,lemma,depparse')
+		parse_info = cs_nlp(utterance)
 
 	parse_results = []
 
@@ -99,48 +106,36 @@ if __name__ == '__main__':
 	parser = argparse.ArgumentParser()
 	parser.add_argument('--input', type = str, help = 'path to data/')
 	parser.add_argument('--lg', type = str, help = 'en, es, hr')
+	parser.add_argument('--corpus', type = str, help = 'e.g., PELIC, TOEFL')
 
 	args = parser.parse_args()
 
+	corpus = args.corpus
+	model = ''
+
 	if args.lg == 'en':
-		model = Parser.load('models/en_ewt_model')
-		for corpus in ['WriCLE_informal', 'PELIC']:
-			print(corpus)
-			for directory in os.listdir(args.input + corpus):
-				if directory in ['Spanish, Arabic, Thai, Taiwanese, French']:
-					for file in os.listdir(args.input + corpus + '/' + directory):
-						file_name = file.split('.')[0]
-						check = 0
-						with io.open(args.input + corpus + '/' + directory + '/' + file_name + '.conllu') as f:
-							for line in f:
-								toks = line.split('\t')
-								if 'None' in toks:
-									check += 1
-									break
-						if check != 0:
-							try:
-								print(file)
-								predict(file, args.input + corpus + '/' + directory + '/', model, 'en', directory)
-							except:
-								pass
-					#	if file_name + '.conllu' not in os.listdir(args.input + corpus + '/' + directory + '/') or os.stat(args.input + corpus + '/' + directory + '/' + file_name + '.conllu').st_size == 0:	
-					#		print(file)
-					#		try:
-					#			predict(file, args.input + corpus + '/' + directory + '/', model, 'en', directory)
-					#		except:
-					#			pass
-							
+		model = Parser.load('../models/en_ewt_model')
+
 	if args.lg == 'es':
-		model = Parser.load('models/es_ancora_model')
-		for corpus in ['CEDEL']:
-			print(corpus)
-			for directory in os.listdir(args.input + corpus):
-				print(directory)
-				for file in os.listdir(args.input + corpus + '/' + directory):
-					file_name = file.split('.')[0]
-					if file_name + '.conllu' not in os.listdir(args.input + corpus + '/' + directory + '/') or os.stat(args.input + corpus + '/' + directory + '/' + file_name + '.conllu').st_size == 0:	
-						try:
-							predict(file, args.input + corpus + '/' + directory + '/', model, 'es', directory)
-						except:
-							pass
+		model = Parser.load('../models/es_ancora_model')
+
+	if args.lg == 'hr':
+		model = Parser.load('../models/hr_set_model')
+
+	if args.lg == 'pt':
+		model = Parser.load('../models/pt_gsd_model')
+
+	if args.lg == 'cs':
+		model = Parser.load('../models/cs_pdt_model')
+
+	for directory in os.listdir(args.input + corpus):
+		print(directory)
+		if len(os.listdir(args.input + corpus + '/' + directory)) != 0:
+			for file in os.listdir(args.input + corpus + '/' + directory):
+				file_name = file.split('.')[0]
+				if file_name + '.conllu' not in os.listdir(args.input + corpus + '/' + directory + '/') or os.stat(args.input + corpus + '/' + directory + '/' + file_name + '.conllu').st_size == 0:	
+					try:
+						predict(file, args.input + corpus + '/' + directory + '/', model, 'en', directory)
+					except:
+						pass 
 

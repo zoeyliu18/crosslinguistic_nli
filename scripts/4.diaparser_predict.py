@@ -18,7 +18,8 @@ def read_essay(file, path):
 	with io.open(path + file, encoding = 'utf-8') as f:
 		for line in f:
 			toks = line.strip().split()
-			essay.append(toks)
+			if toks != []:
+				essay.append(toks)
 
 	return essay
 
@@ -99,31 +100,28 @@ if __name__ == '__main__':
 	parser = argparse.ArgumentParser()
 	parser.add_argument('--input', type = str, help = 'path to data/')
 	parser.add_argument('--lg', type = str, help = 'en, es, hr')
+	parser.add_argument('--corpus', type = str, help = 'e.g., pelic, toefl')
 
 	args = parser.parse_args()
 
+	corpus = args.corpus
+	model = ''
+
 	if args.lg == 'en':
-		model = Parser.load('models/en_ewt_model')
-		for corpus in ['WriCLE_informal']:
-			print(corpus)
-			for directory in os.listdir(args.input + corpus):
-				print(directory)
-				for file in os.listdir(args.input + corpus + '/' + directory):
-					file_name = file.split('.')[0]
-					if file_name + '.conllu' not in os.listdir(args.input + corpus + '/' + directory + '/') or os.stat(args.input + corpus + '/' + directory + '/' + file_name + '.conllu').st_size == 0:	
-						print(file)
-						predict(file, args.input + corpus + '/' + directory + '/', model, 'en', directory)
+		model = Parser.load('crosslinguistic_nli_local/models/en_ewt_model')
 
 	if args.lg == 'es':
-		model = Parser.load('models/es_ancora_model')
-		for corpus in ['CAES', 'COWS', 'CEDEL']:
-			print(corpus)
-			for directory in os.listdir(args.input + corpus):
-				print(directory)
-				for file in os.listdir(args.input + corpus + '/' + directory):
-					file_name = file.split('.')[0]
-					if file_name + '.conllu' not in os.listdir(args.input + corpus + '/' + directory + '/') or os.stat(args.input + corpus + '/' + directory + '/' + file_name + '.conllu').st_size == 0:	
-						print(file)
-						predict(file, args.input + corpus + '/' + directory + '/', model, 'es', directory)
+		model = Parser.load('crosslinguistic_nli_local/models/es_ancora_model')
 
+	if args.lg == 'hr':
+		model = Parser.load('crosslinguistic_nli_local/models/hr_set_model')
+
+
+	for directory in os.listdir(args.input + corpus):
+		print(directory)
+		for file in os.listdir(args.input + corpus + '/' + directory):
+			file_name = file.split('.')[0]
+			if file_name + '.conllu' not in os.listdir(args.input + corpus + '/' + directory + '/') or os.stat(args.input + corpus + '/' + directory + '/' + file_name + '.conllu').st_size == 0:	
+				print(file)
+				predict(file, args.input + corpus + '/' + directory + '/', model, 'en', directory)
 

@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/tcsh
 #SBATCH --partition=full_nodes
 #SBATCH --job-name='tope'
 #SBATCH --ntasks 1 --cpus-per-task 4
