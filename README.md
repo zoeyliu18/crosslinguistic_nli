@@ -49,15 +49,20 @@ Corpus index:
   - CEDEL: ```cedel```
   - COWS-L2H: ```cows```
   
-e.g., ```python3 scripts/1.data_process.py --input resources/ --output data/ --corpus toefl```
+e.g., run within ```crosslinguistic_nli/```
+  - ```python3 scripts/1.data_process.py --input resources/ --output data/ --corpus toefl```
 
 ## Download Stanza models
 
-```python3 2.download_stanza.py```
+e.g., run within ```crosslinguistic_nli/```
+  - ```python3 2.download_stanza.py```
 
 ## Training monolingual parsers
 
-```bash 3.train_parsers.sh```
+```cp diaparser/crosslinguistic_nli/scripts/3.train_parser.sh diaparser/```
+
+e.g.,  run within ```diaparser/```
+  - ```bash 3.train_parsers.sh```
 
 ## Generate parses for each corpus
 
@@ -66,4 +71,7 @@ Language index:
   - Spanish: ```es```
   - Croatian: ```hr```
 
-e.g., ```python3 scripts/4.parser_predict.py --input data/ --lg en --corpus toefl```
+```cp diaparser/crosslinguistic_nli/scripts/4.diaparser_predict.py diaparser/```
+
+e.g.,  run within ```diaparser/```
+  - ```python3 4.diaparser_predict.py --input data/ --lg en --corpus TOEFL```
