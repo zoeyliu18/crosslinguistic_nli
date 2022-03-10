@@ -1,7 +1,7 @@
 #usr/bin/env python3
 
 import io, os, argparse
-from diaparser.parsers import Parser
+from machamp.parsers import Parser
 import pandas as pd
 import stanza
 
@@ -114,21 +114,22 @@ if __name__ == '__main__':
 	seed = args.seed 
 
 	model = ''
+	lg_code = ''
 
 	if args.lg == 'en':
-		model = Parser.load('models/en_ewt/' + emb + '_' + seed)
+		lg_code = 'en_ewt'
 
 	if args.lg == 'es':
-		model = Parser.load('models/es_ancora/' + emb + '_' + seed)
+		lg_code = 'es_ancora'
 
 	if args.lg == 'hr':
-		model = Parser.load('models/hr_set/' + emb + '_' + seed)
+		lg_code = 'hr_set'
 
 	if args.lg == 'pt':
-		model = Parser.load('models/pt_gsd/' + emb + '_' + seed)
+		lg_code = 'pt_gsd'
 
 	if args.lg == 'cs':
-		model = Parser.load('models/cs_pdt/' + emb + '_' + seed)
+		lg_code = 'cs_pdt'
 
 	if not os.path.exists('parses/'):
 		os.system('mkdir parses/')
@@ -141,15 +142,15 @@ if __name__ == '__main__':
 			if not os.path.exists('parses/' + corpus + '/' + directory):
 				os.system('mkdir ' + 'parses/' + corpus + '/' + directory)
 
-			if not os.path.exists('parses/' + corpus + '/' + directory + '/diaparser' + '_' + emb + '_' + seed):
-				os.system('mkdir ' + 'parses/' + corpus + '/' + directory + '/diaparser' + '_' + emb + '_' + seed)
+			if not os.path.exists('parses/' + corpus + '/' + directory + '/machamp' + '_' + emb + '_' + seed):
+				os.system('mkdir ' + 'parses/' + corpus + '/' + directory + '/machamp' + '_' + emb + '_' + seed)
 
 			if len(os.listdir('data/' + corpus + '/' + directory)) != 0:
 				for file in os.listdir('data/' + corpus + '/' + directory):
 					file_name = file.split('.')[0]
-					if file_name + '.conllu' not in os.listdir('parses/' + corpus + '/' + directory + '/diaparser' + '_' + emb + '_' + seed) or os.stat('parses/' + corpus + '/' + directory + '/diaparser' + '_' + emb + '_' + seed + '/' + file_name + '.conllu').st_size == 0:	
+					if file_name + '.conllu' not in os.listdir('parses/' + corpus + '/' + directory + '/machamp' + '_' + emb + '_' + seed) or os.stat('parses/' + corpus + '/' + directory + '/machamp' + '_' + emb + '_' + seed + '/' + file_name + '.conllu').st_size == 0:	
 						try:
-							predict(file, 'data/' + corpus + '/' + directory + '/', 'parses/' + corpus + '/' + directory + '/diaparser' + '_' + emb + '_' + seed, model, args.lg, directory)
+							os.system("python3 predict.py logs/models/" + lg_code + '/' + emb + '_' + seed + '/*/model.tar.gz data/' + corpus + '/' + directory + '/' + file + ' parses/' + corpus + '/' + directory + '/machamp' + '_' + emb + '_' + seed + '/' + file_name + '.conllu --device 0')
 						except:
 							pass 
 

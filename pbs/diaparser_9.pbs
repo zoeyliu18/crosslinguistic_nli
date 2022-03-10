@@ -1,0 +1,14 @@
+#!/bin/tcsh
+#SBATCH --partition=gpua100
+#SBATCH --job-name='nli'
+#SBATCH --ntasks 1 --cpus-per-task 4
+#SBATCH --mem=100gb
+#SBATCH --time=48:00:00
+#SBATCH --mail-type=BEGIN,END,FAIL.
+module load cuda10.2
+module load pytorch/1.7.0gpu
+
+cd /data/liuaal/crosslinguistic_nli_local/diaparser/
+
+python -m diaparser.cmds.biaffine_dependency train --train ../UD_data/UD_Spanish-AnCora/es_ancora-ud-train.conllu --dev ../UD_data/UD_Spanish-AnCora/es_ancora-ud-dev.conllu --test ../UD_data/UD_Spanish-AnCora/es_ancora-ud-test.conllu  -b -d 0 -p models/es_ancora/mbert_3  -f bert  --bert bert-base-multilingual-cased  -s 3
+

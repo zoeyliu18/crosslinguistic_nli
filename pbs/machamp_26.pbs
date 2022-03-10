@@ -1,0 +1,14 @@
+#!/bin/tcsh
+#SBATCH --partition=gpua100
+#SBATCH --job-name='nli'
+#SBATCH --ntasks 1 --cpus-per-task 4
+#SBATCH --mem=100gb
+#SBATCH --time=48:00:00
+#SBATCH --mail-type=BEGIN,END,FAIL.
+module load cuda10.2
+module load pytorch/1.7.0gpu
+
+cd /data/liuaal/crosslinguistic_nli_local/machamp/
+
+python3 train.py --dataset_config configs/cs_pdt.json --name models/cs_pdt/mbert_2 --parameters_config configs/params_mbert.json --seed 2 --device 0
+

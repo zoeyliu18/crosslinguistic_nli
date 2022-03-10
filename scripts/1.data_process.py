@@ -167,7 +167,7 @@ def read_pelic(path, output):
 		for essay in v:
 			new_essay = sentence_split(essay)
 
-			if k != 'English':
+			if k not in ['English', 'Other', 'Russian,Ukrainian']:
 				with io.open(output + 'PELIC/' + k + '/' + str(idx) + '.txt', 'w') as f:
 					for sent in new_essay:
 						f.write(sent + '\n')
