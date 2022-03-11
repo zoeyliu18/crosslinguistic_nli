@@ -15,7 +15,7 @@ def read_essay(file, path):
 	with io.open(path + file, encoding = 'utf-8') as f:
 		for line in f:
 			toks = line.strip().split()
-			if toks != []:
+			if toks != [] and len(toks) != 1:
 				essay.append(toks)
 
 	return essay

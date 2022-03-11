@@ -464,6 +464,74 @@ def read_peaple(path, output):
 				for sent in new_essay:
 					f.write(sent + '\n')
 
+
+### Read ICNALE ###
+
+def read_icnale(path, output):
+
+	lg_directory = {'CHN': 'Chinese', 'HKG': 'Cantonese', 'IDN': 'Indonesian', 'JPN': 'Japanese', 'KOR': 'Korean', 'PAK': 'Pakistan', 'PHL': 'Philippines', 'SIN': 'Malay', 'THA': 'Thailand', 'TWN': 'Taiwanese', 'UAE': 'Arabic'}
+
+	if not os.path.exists(output + 'ICNALE'):
+		os.system('mkdir ' + output + 'ICNALE')
+
+	for file in os.listdir(path + 'ICNALE_Written_Essays_2.4/Merged/*Text/'):
+		lg_code = file.split('_')[1]
+		if lg_code in lg_directory:
+			lg = lg_directory[lg_code]
+
+			if not os.path.exists(output + 'ICNALE/' + lg):
+				os.system('mkdir ' + output + 'ICNALE/' + lg)
+
+			if os.stat(path + 'ICNALE_Written_Essays_2.4/Merged/*Text*/' + file).st_size != 0:
+				essay = []
+
+				with io.open(path + 'ICNALE_Written_Essays_2.4/Merged/*Text*/' + file) as f:
+					for line in f:
+						essay.append(line.strip())
+
+				new_essay = sentence_split(essay)
+				
+				with io.open(output + 'ICNALE/' + lg + '/' + file, 'w') as f:
+					for sent in new_essay:
+						f.write(sent + '\n')
+
+### Read MERLIN ###
+
+def read_merlin(path, output):
+
+	l2_dict = {'german': 'German', 'czech': 'Czech', 'italian': 'Italian'}
+
+	for l2, L2 in l2_dict.items():
+		if not os.path.exists(output + 'MERLIN_' + L2):
+			os.system('mkdir ' + output + 'MERLIN_' + L2)
+
+		for file in os.listdir(path + 'merlin-text-v1.1/plain/' + l2 + '/'):
+			if file in os.listdir(path + 'merlin-text-v1.1/meta_ltext/' + l2 + '/'):
+				with io.open(path + 'merlin-text-v1.1/meta_ltext/' + l2 + '/' + file) as meta_f:
+					l1 = ''
+					for line in meta_f:
+						line = line.strip()
+						if line.startswith('Mother tongue') or line.startswith('mother tongue'):
+							l1_info = line.split(': ')[1].split()
+							if len(l1_info) == 1:
+								l1 = l1_info[0]
+
+					if l1 not in ['', 'Other', 'other', 'EMPTY']:
+						if not os.path.exists(output + 'MERLIN_' + L2 + '/' + l1):
+							os.system('mkdir ' + output + 'MERLIN_' + L2 + '/' + l1)
+
+						essay = []
+						with io.open(path + 'merlin-text-v1.1/plain/' + l2 + '/' + file) as f:
+							for line in f:
+								essay.append(line.strip())
+
+						new_essay = sentence_split(essay)
+						with io.open(output + 'MERLIN_' + L2 + '/' + l1 + '/' + file, 'w') as f:
+							for sent in new_essay:
+								f.write(sent + '\n')
+
+
+
 if __name__ == '__main__':
 
 	parser = argparse.ArgumentParser()
@@ -474,7 +542,7 @@ if __name__ == '__main__':
 	args = parser.parse_args()
 
 	corpus = args.corpus
-	function_maps = {'caes': read_caes, 'cows': read_cows, 'cedel': read_cedel, 'pelic': read_pelic, 'wricle': read_wricle, 'pelic': read_pelic, 'toefl': read_toefl, 'efcamdat': read_efcamdat, 'croltec': read_croltec, 'cople': read_cople, 'leiria': read_leiria, 'peaple': read_peaple}
+	function_maps = {'caes': read_caes, 'cows': read_cows, 'cedel': read_cedel, 'pelic': read_pelic, 'wricle': read_wricle, 'pelic': read_pelic, 'toefl': read_toefl, 'efcamdat': read_efcamdat, 'croltec': read_croltec, 'cople': read_cople, 'leiria': read_leiria, 'peaple': read_peaple, 'icnale': read_icnale, 'merlin': read_merlin}
 
 	function_maps[corpus](args.input, args.output)
 

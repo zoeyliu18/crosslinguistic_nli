@@ -42,5 +42,30 @@ python3 train.py --dataset_config configs/cs_pdt.json --name models/cs_pdt/xlmr_
 python3 train.py --dataset_config configs/cs_pdt.json --name models/cs_pdt/xlmr_2 --parameters_config configs/params_xlmr.json --seed 2 --device 0
 python3 train.py --dataset_config configs/cs_pdt.json --name models/cs_pdt/xlmr_3 --parameters_config configs/params_xlmr.json --seed 3 --device 0
 
+python3 train.py --dataset_config configs/de_gsd.json --name models/de_gsd/mbert_1 --parameters_config configs/params_mbert.json --seed 1 --device 0
+python3 train.py --dataset_config configs/de_gsd.json --name models/de_gsd/mbert_2 --parameters_config configs/params_mbert.json --seed 2 --device 0
+python3 train.py --dataset_config configs/de_gsd.json --name models/de_gsd/mbert_3 --parameters_config configs/params_mbert.json --seed 3 --device 0
+
+python3 train.py --dataset_config configs/de_gsd.json --name models/de_gsd/mbert_1 --parameters_config configs/params_xlmr.json --seed 1 --device 0
+python3 train.py --dataset_config configs/de_gsd.json --name models/de_gsd/mbert_2 --parameters_config configs/params_xlmr.json --seed 2 --device 0
+python3 train.py --dataset_config configs/de_gsd.json --name models/de_gsd/mbert_3 --parameters_config configs/params_xlmr.json --seed 3 --device 0
+
+python3 train.py --dataset_config configs/de_gsd.json --name models/it_partut/mbert_1 --parameters_config configs/params_mbert.json --seed 1 --device 0
+python3 train.py --dataset_config configs/de_gsd.json --name models/it_partut/mbert_2 --parameters_config configs/params_mbert.json --seed 2 --device 0
+python3 train.py --dataset_config configs/de_gsd.json --name models/it_partut/mbert_3 --parameters_config configs/params_mbert.json --seed 3 --device 0
+
+python3 train.py --dataset_config configs/de_gsd.json --name models/it_partut/mbert_1 --parameters_config configs/params_xlmr.json --seed 1 --device 0
+python3 train.py --dataset_config configs/de_gsd.json --name models/it_partut/mbert_2 --parameters_config configs/params_xlmr.json --seed 2 --device 0
+python3 train.py --dataset_config configs/de_gsd.json --name models/it_partut/mbert_3 --parameters_config configs/params_xlmr.json --seed 3 --device 0
+
+python3 train.py --dataset_config configs/de_gsd.json --name models/no_bokmaal/mbert_1 --parameters_config configs/params_mbert.json --seed 1 --device 0
+python3 train.py --dataset_config configs/de_gsd.json --name models/no_bokmaal/mbert_2 --parameters_config configs/params_mbert.json --seed 2 --device 0
+python3 train.py --dataset_config configs/de_gsd.json --name models/no_bokmaal/mbert_3 --parameters_config configs/params_mbert.json --seed 3 --device 0
+
+python3 train.py --dataset_config configs/de_gsd.json --name models/no_bokmaal/mbert_1 --parameters_config configs/params_xlmr.json --seed 1 --device 0
+python3 train.py --dataset_config configs/de_gsd.json --name models/no_bokmaal/mbert_2 --parameters_config configs/params_xlmr.json --seed 2 --device 0
+python3 train.py --dataset_config configs/de_gsd.json --name models/no_bokmaal/mbert_3 --parameters_config configs/params_xlmr.json --seed 3 --device 0
+
+
 cd ..
 
