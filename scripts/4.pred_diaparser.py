@@ -6,6 +6,33 @@ import pandas as pd
 import stanza
 
 
+### In case any file is not splitted nicely
+
+def sentence_split(list_of_sentences):
+
+	data = []
+
+	for sent in list_of_sentences:
+		if len(sent) != 0 and sent != '\n':
+			for i in range(len(sent)):
+				c = sent[i]
+				if c not in ['¡', '?', '?', '.', '!']:
+					data.append(c)
+				else:
+					data.append(c)
+					data.append('-SENT-')
+
+	sentences = ''.join(c for c in data)
+	sentences = sentences.split('-SENT-')
+
+	new_sentences = []
+	for sent in sentences:
+		if len(sent) != 0:
+			new_sentences.append(sent)
+
+	return new_sentences
+
+
 ### Read each essay in individual *.txt format ###
 
 def read_essay(file, path):
@@ -15,10 +42,28 @@ def read_essay(file, path):
 	with io.open(path + file, encoding = 'utf-8') as f:
 		for line in f:
 			toks = line.strip().split()
-			if toks != [] and len(toks) != 1:
-				essay.append(toks)
+			if toks != []:
+				essay.append(' '.join(w for w in toks))
+
+	temp_essay = sentence_split(essay)
+	new_essay = []
+	for sent in temp_essay:
+		new_essay.append(sent.split())
 
 	return essay
+
+
+#def read_essay(file, path):
+
+#	essay = []
+
+#	with io.open(path + file, encoding = 'utf-8') as f:
+#		for line in f:
+#			toks = line.strip().split()
+#			if toks != []:
+#				essay.append(toks)
+
+#	return essay
 
 
 ### Getting POS and STEM features from Stanza ###

@@ -1,4 +1,4 @@
-TREEBANKS="UD_English-EWT UD_Spanish-AnCora UD_Portuguese-GSD UD_Croatian-SET UD_Czech-PDT"
+TREEBANKS="UD_English-EWT UD_Spanish-AnCora UD_Portuguese-GSD UD_Croatian-SET UD_Czech-PDT UD_German-GSD UD_Italian-ParTUT UD_Norwegian_Bokmaal"
 
 mkdir UD_Data
 

@@ -19,7 +19,15 @@ python3 scripts/0.get_ask.py  ### This will already generate text files for each
 
 ### Get Finnish LAS2 learner data ###
 
-python3 scripts/0.get_ask.py  ### This will already generate text files for each L1 within the data/ folder
+python3 scripts/0.get_las2.py  ### This will already generate text files for each L1 within the data/ folder
+
+### Get UD_Italian-Valico learner data ###
+
+python3 scripts/0.get_it-valico.py
+
+### Get TOCFL learner data ###
+
+python3 scripts/0.get_tocfl.py
 
 ### Generate training pbs file (only on BC Andromeda cluster)
 
